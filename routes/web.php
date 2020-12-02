@@ -6,6 +6,7 @@ use App\Http\Controllers\UserauthController;
 use App\Http\Controllers\TransactionheaderController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\HomeController;
 URL::forceRootUrl('http://127.0.0.1:8000');
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,7 @@ Route::post('user', [UserauthController::class,'userlogin']);
 // Route::resource('transactions','TransactionheaderController');
 
 // Route::resource('items','ItemController');
-// Route::resource('warehouses','WarehouseController');
+Route::resource('home', HomeController::class);
 Route::resource('items', ItemController::class)->middleware('usertypecheck');
 Route::resource('warehouses', WarehouseController::class)->middleware('usertypecheck');
 Route::resource('transactions', TransactionheaderController::class)->middleware('logincheck');
@@ -48,11 +49,6 @@ Route::get('/', function () {
 Route::get('/transform', [TransactionheaderController::class, 'create'])->middleware('checktransaction');
 Route::post('/transform', [TransactionheaderController::class, 'store'])->middleware('checktransaction');
 Route::post('/updatetrans', [TransactionheaderController::class, 'update']);
-
-Route::get('test/{id}', function ($id) {
-    return $id;
-});
-
 
 Route::fallback(function() {
     return redirect('/');

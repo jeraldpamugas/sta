@@ -36,6 +36,7 @@ class ItemController extends Controller
 
     public function show(Items $item)
     {
+        // $request = Request::create('api/items/' . $item->id, 'GET');
         $request = Request::create('api/items/' . $item->id, 'GET');
         $response = app()->handle($request);
         $responseBody = $response->getContent();

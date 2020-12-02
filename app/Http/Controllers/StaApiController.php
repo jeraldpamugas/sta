@@ -13,7 +13,7 @@ use Carbon\Carbon;
 
 class StaApiController extends Controller
 {
-    //Items
+    //Items -> getItems, storeItem, getItem, destroyItem
 
     public function getItems()
     {
@@ -71,7 +71,7 @@ class StaApiController extends Controller
         }
     }
 
-    //Warehouse
+    //Warehouse -> getWarehouses, storeWarehouse, getWarehouse, destroyWarehouse
 
     public function getWarehouses()
     {
@@ -129,7 +129,8 @@ class StaApiController extends Controller
         }
     }
 
-    //Transactions
+    //Transactions -> getTransactions, storeTransaction, showTransaction, updateTransaction
+    //Transactionslines -> getTransactionLines
 
     public function getTransactions()
     {
@@ -149,8 +150,6 @@ class StaApiController extends Controller
             $itemCode;
             $itemQty;
 
-            $stack = array();
-
             foreach($request->items as $item){
 
                 $stringVal = explode('-', $item);
@@ -165,8 +164,6 @@ class StaApiController extends Controller
                 $tmp->unit = $itemList[0]->unit;
                 $tmp->quantity = $itemQty;
                 $tmp->save();
-
-                array_push($stack, $tmp);
             }
 
             return response()->json(['Success'=>'Transaction Created successfully'], 200);
@@ -178,7 +175,8 @@ class StaApiController extends Controller
         if (Transactionheaders::where('id', $id)->exists()) {
             $trans = Transactionheaders::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
             return response($trans, 200);
-        } else {
+        } 
+        else {
             return response()->json([
                 "message" => "Transaction not found!"
             ], 404);
@@ -191,9 +189,9 @@ class StaApiController extends Controller
             $translinesList = Transactionlines::join('items', 'transactionlines.itemCode', '=', 'items.itemCode')
             ->where('transNo',$transNo)
             ->get(['items.Description', 'transactionlines.*'])->toJson(JSON_PRETTY_PRINT);
-            // $trans = Transactionheaders::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
             return response($translinesList, 200);
-        } else {
+        } 
+        else {
             return response()->json([
                 "message" => "Transactionline not found!"
             ], 404);
@@ -211,34 +209,28 @@ class StaApiController extends Controller
             $transHeader;
 
             if($request->status == 'A'){
-
                 $transHeader = Transactionheaders::updateOrCreate(['id' => $request->id], [
                     'status' => $request->status,
                     'authorizedBy' => $currentUser,
                     'authorizedDate' => Carbon::now(),
                     'sysmodifier' => $currentUser
                 ]);
-
             }
             else if($request->status == 'C'){
-
                 $transHeader = Transactionheaders::updateOrCreate(['id' => $request->id], [
                     'status' => $request->status,
                     'confirmedBy' => $currentUser,
                     'confirmedDate' => Carbon::now(),
                     'sysmodifier' => $currentUser
                 ]);
-
             }
             else if($request->status == 'P'){
-
                 $transHeader = Transactionheaders::updateOrCreate(['id' => $request->id], [
                     'status' => $request->status,
                     'processedBy' => $currentUser,
                     'processedDate' => Carbon::now(),
                     'sysmodifier' => $currentUser
                 ]);
-
             }
             else{
                 return 'Invalid Status';

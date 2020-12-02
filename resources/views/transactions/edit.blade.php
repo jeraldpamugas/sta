@@ -77,39 +77,24 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                <div class="col-sm-6">
                     @if($usertype == 'supervisor' && $transaction->status == 'O')
-                        <div style="padding: 0;" class="col-sm-12">
-                            <div style="margin: auto;">
-                                <div style="padding: 0;" class="col-sm-12 form-group">
-                                    <strong>Update Status:</strong>
-                                    <select id="status" name="status" class="form-control">
-                                        <option value="A">Authorized</option>
-                                    </select>
-                                </div>
-                            </div>
+                        <input id="status" name="status" type="hidden" value="A">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-primary" style="display: block; width: 100%; margin-top: 18px;">Authorize</button>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <button type="submit" class="btn btn-primary" style="display: block; width: 100%; margin-top: 18px;">Save Update</button>
-                    </div>
                     @elseif($usertype == 'manager' && $transaction->status == 'A' || $usertype == 'manager' && $transaction->status == 'C')
-                        <div style="padding: 0;" style="margin: auto;" class="col-sm-12">
-                            <div style="padding: 0;" class="col-sm-12 form-group">
-                                <strong>Update Status:</strong>
-                                <select id="status" name="status" class="form-control">
-                                    @if ($transaction->status == 'A')
-                                        <option value="C">Confirmed</option>
-                                    @elseif ($transaction->status == 'C')
-                                        <option value="P">Processed</option>
-                                    @endif
-                                </select>
-                            </div>
+                        @if ($transaction->status == 'A')
+                        <input id="status" name="status" type="hidden" value="C">
+                        @elseif ($transaction->status == 'C')
+                        <input id="status" name="status" type="hidden" value="P">
+                        @endif
+                        <div class="col-sm-12">
+                            @if ($transaction->status == 'A')
+                                <button type="submit" class="btn btn-primary" style="display: block; width: 100%; margin-top: 18px;">Confirm</button>
+                            @elseif ($transaction->status == 'C')
+                                <button type="submit" class="btn btn-primary" style="display: block; width: 100%; margin-top: 18px;">Process</button>
+                            @endif
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <button type="submit" class="btn btn-primary" style="display: block; width: 100%; margin-top: 18px;">Save Update</button>
-                    </div>
                     @endif
                 </div>
             </div>

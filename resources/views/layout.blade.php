@@ -19,29 +19,46 @@
       .requiredField{
           border: 2px solid red;
       }
+      #nav a{
+        background-color: #275e69;
+      }
+      .active{
+        background-color: #275e69;
+      }
+      
+      .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        width: 100%;
+      }
+
+      .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+      }
     </style>
     
 </head>
 <body>
     <nav class="navbar navbar-default">
-        <div class="container-fluid">
+        <div style="background-color: #54b9cd;" class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ url('/transactions') }}">STA-Home</a>
+            <a style="color: white" class="navbar-brand" href="{{ url('/home') }}">STA-Home</a>
           </div>
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 @if($usertype != 'staff')
-                <li id="nav navItem" role="presentation"><a href="{{ url('/items') }}">Item</a></li>
-                <li id="nav navWH" role="presentation"><a href="{{ url('/warehouses') }}">Warehouse</a></li>
+                <li role="presentation"><a id="navItem" class="navi" style="color: white" href="{{ url('/transactions') }}">Transactions</a></li>
+                <li role="presentation"><a id="navItem" class="navi" style="color: white" href="{{ url('/items') }}">Item</a></li>
+                <li role="presentation"><a id="navWH" class="navi" style="color: white" href="{{ url('/warehouses') }}">Warehouse</a></li>
                 @endif
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ url('/logout') }}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                <li><a style="color: white" href="{{ url('/logout') }}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
             </ul>
           </div>
         </div>
@@ -57,14 +74,16 @@
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <script>
-    // $(document).on('click', '#nav' function(){
-    //     console.log("asd");
-    //     $(".active").removeClass("active");
+    // $(document).ready(function(){
+    //   $(".navi").click(function(){
+    //     var current_page = $("#page-name").data("page");
+    //     $('.active').removeClass('active');
+    //     $(this).addClass('active');
+    //   });
     // });
-    // $(document).on('click', 'a#slidingMenuButton.BtextToLeft', function () {
-    //     $("i.fa-bars").removeClass("textToLeft").addClass("textToRight");
-    //     $("a#slidingMenuButton").removeClass("BtextToLeft").addClass("noState");
-    //     alert("lol2");
+    // $(document).on('click', 'li#nav a', function () {
+    //   alert('asdasd')
+    //   $('#navWH a').addClass('active');
     // });
     
   
