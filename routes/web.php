@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserauthController;
 use App\Http\Controllers\TransactionheaderController;
@@ -52,15 +53,6 @@ Route::get('test/{id}', function ($id) {
     return $id;
 });
 
-//CLI command to make middleware
-//php artisan make:middleware Admin
-//Register a middleware in Protected $Routemiddleware in Kernel.php
-
-//Regular route with middleware
-//Route::get('admin/routes', 'HomeController@admin')->middleware('admin');
-
-//Multiple middleware in Single Route
-// Route::get('admin/routes', 'HomeController@admin')->middleware(['admin','auth']);
 
 Route::fallback(function() {
     return redirect('/');

@@ -90,7 +90,7 @@
         </table>
    </div>
   <script>
-    $('#transactionTable').DataTable();
+    // $('#transactionTable').DataTable();
   </script>
    {{-- {!! $transactions->links() !!} --}}
    {{-- {!! $transactions->appends(input::except('page'))->render() !!} --}}

@@ -132,31 +132,27 @@
         let _url     = '/updatetrans';
         let _token   = $('meta[name="csrf-token"]').attr('content');
 
-        if(!status){
-
-            alert("Status is invalid");
-
-        }
-        else{
-
-            $.ajax({
-                url: _url,
-                type: "POST",
-                data: {
-                    id: id,
-                    status: status,
-                    _token: _token,
-                },
-                success: function(response) {
-                    window.location.href = "/transactions";
-                },
-                error: function(response) {
-                    alert("Invalid Status Value!");
-                    location.reload();
+        $.ajax({
+            url: _url,
+            type: "POST",
+            data: {
+                id: id,
+                status: status,
+                _token: _token,
+            },
+            success: function(response) {
+                if(response == 'Invalid Status'){
+                    alert("Please enter a valid status!");
                 }
-            });
-
-        }
+                else{
+                window.location.href = "/transactions";
+                }
+            },
+            error: function(response) {
+                alert('Press ok to refresh the page!');
+                location.reload();
+            }
+        });
     });
 
     </script>

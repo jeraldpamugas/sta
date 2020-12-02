@@ -228,8 +228,8 @@
                         _token: _token,
                     },
                     success: function(response) {
-                        console.log(response);
-                        // window.location.href = "/transactions";
+                        // console.log(response);
+                        window.location.href = "/transactions";
                     },
                     error: function(response) {
                         console.log(response);

@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h4 style="margin: 0px;">Transaction No: <b>{{ $transaction->transNo }}</b></h4>
+                <h4 style="margin: 0px;">Transaction No: <b>{{ $transaction[0]['transNo'] }}</b></h4>
             </div>
             <div class="pull-right">
                 <a id="btnBack" class="btn" href="{{ route('transactions.index') }}"> Back</a>
@@ -17,7 +17,7 @@
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>Id:</strong>
-                                {{ $transaction->id }}
+                                {{ $transaction[0]['id'] }}
                             </div>
                         </div>
                     </div>
@@ -25,13 +25,13 @@
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>Employee Code:</strong>
-                                {{ $transaction->employeeCode }}
+                                {{ $transaction[0]['employeeCode'] }}
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>Transfer Date:</strong>
-                                {{ $transaction->transferDate }}
+                                {{ $transaction[0]['transferDate'] }}
                             </div>
                         </div>
                     </div>
@@ -39,13 +39,13 @@
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>WarehouseFrom:</strong>
-                                {{ $transaction->warehouseFrom }}
+                                {{ $transaction[0]['warehouseFrom'] }}
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>WarehouseTo:</strong>
-                                {{ $transaction->warehouseTo }}
+                                {{ $transaction[0]['warehouseTo'] }}
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>Reference:</strong>
-                                {{ $transaction->reference }}
+                                {{ $transaction[0]['reference'] }}
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -73,6 +73,7 @@
                                     <thead>
                                         <tr>
                                             <th>Item Code</th>
+                                            <th>Description</th>
                                             <th>Unit</th>
                                             <th>Quantity</th>
                                         </tr>
@@ -80,9 +81,10 @@
                                     <tbody>
                                         @foreach ($translinesList as $item)
                                             <tr>
-                                                <td>{{ $item->itemCode }}</td>
-                                                <td>{{ $item->unit }}</td>
-                                                <td>{{ $item->quantity }}</td>
+                                                <td>{{ $item['itemCode'] }}</td>
+                                                <td>{{ $item['Description'] }}</td>
+                                                <td>{{ $item['unit'] }}</td>
+                                                <td>{{ $item['quantity'] }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -100,7 +102,6 @@
         </div>
     </div>
     <script type="text/javascript">
-        console.log($transaction);
         function showReport(){
 
             $("#btnReport").hide();

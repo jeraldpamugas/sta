@@ -73,9 +73,6 @@ class TransactionheaderController extends Controller
     public function show(Transactionheaders $transaction)
     {
         $usertype = session::get('usertype');
-        $translinesList = Transactionlines::select()
-        ->where('transNo', $transaction->transNo)
-        ->get();
 
         $statusVal;
         switch($transaction->status){
@@ -93,14 +90,19 @@ class TransactionheaderController extends Controller
                 break;
         }
 
-        // return view('transactions.show',compact('transaction','translinesList','usertype','statusVal'));
-
+        //transaction
         $request = Request::create('api/transactions/' . $transaction->id, 'GET');
         $response = app()->handle($request);
         $responseBody = $response->getContent();
-        $transactions = json_decode($responseBody);
+        $transaction = json_decode($responseBody, true);
+
+        //transactionlines
+        $request2 = Request::create('api/transactionlines/' . $transaction[0]['transNo'], 'GET');
+        $response2 = app()->handle($request2);
+        $responseBody2 = $response2->getContent();
+        $translinesList = json_decode($responseBody2, true);
         
-        return response()->json($transactions);
+        return view('transactions.show',compact('transaction','translinesList','usertype','statusVal'));
     }
 
     public function edit(Transactionheaders $transaction)
@@ -118,45 +120,18 @@ class TransactionheaderController extends Controller
 
     public function update(Request $request)
     {
-        $currentUser = session::get('code');
         $request->merge(['status' => $request->status]);
-        $transHeader;
 
-        if($request->status == 'A'){
-            
-            $transHeader = Transactionheaders::updateOrCreate(['id' => $request->id], [
-                'status' => $request->status,
-                'authorizedBy' => $currentUser,
-                'authorizedDate' => Carbon::now(),
-                'sysmodifier' => $currentUser
-            ]);
-
-        }
-        else if($request->status == 'C'){
-            
-            $transHeader = Transactionheaders::updateOrCreate(['id' => $request->id], [
-                'status' => $request->status,
-                'confirmedBy' => $currentUser,
-                'confirmedDate' => Carbon::now(),
-                'sysmodifier' => $currentUser
-            ]);
-
-        }
-        else if($request->status == 'P'){
-            
-            $transHeader = Transactionheaders::updateOrCreate(['id' => $request->id], [
-                'status' => $request->status,
-                'processedBy' => $currentUser,
-                'processedDate' => Carbon::now(),
-                'sysmodifier' => $currentUser
-            ]);
-
+        $req = Request::create('api/transactions', 'PUT', $request->all());
+        $response = app()->handle($req);
+        $responseBody = $response->getContent();
+        
+        if($responseBody == 'Invalid Status'){
+            return 'Invalid Status';
         }
         else{
-            return response()->json(['data' => $transHeader]);
+            return response()->json([$responseBody], 200);
         }
-
-        return response()->json(['code'=>200, 'success'=>'Post Created successfully','data' => $transHeader], 200);
     }
 
 }

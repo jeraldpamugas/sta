@@ -35,3 +35,5 @@ Route::get('transactions', [StaApiController::class, 'getTransactions']);
 Route::get('transactions/{id}', [StaApiController::class, 'showTransaction']);
 Route::post('transactions', [StaApiController::class, 'storeTransaction']);
 Route::put('transactions', [StaApiController::class, 'updateTransaction']);
+//TransactionLines
+Route::get('transactionlines/{id}', [StaApiController::class, 'getTransactionLines']);
