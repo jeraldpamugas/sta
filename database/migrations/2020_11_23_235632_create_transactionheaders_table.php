@@ -32,6 +32,7 @@ class CreateTransactionheadersTable extends Migration
             $table->integer("syscreator")->nullable();
             $table->timestamp("updated_at")->nullable();
             $table->integer("sysmodifier")->nullable();
+            $table->boolean("isOpened")->default(0);
         });
         DB::statement("ALTER TABLE transactionheaders AUTO_INCREMENT = 10000;");
     }

@@ -25,6 +25,7 @@ class Transactionheaders extends Model
         'created_at',
         'syscreator',
         'updated_at',
-        'sysmodifier'
+        'sysmodifier',
+        'isOpened'
     ];
 }

@@ -36,7 +36,7 @@ class UserauthController extends Controller
                     $req->session()->put('usertype',$user->usertype);
                 }
             $req->session()->put('code',$data['usercode']);
-            return redirect('transactions');
+            return redirect('home');
         }
     }
 }

@@ -27,10 +27,11 @@ class ItemController extends Controller
             'Description' => 'required',
             'unit' => 'required'
         ]);
+        return $request->all();
         $req = Request::create('api/items', 'POST', $request->all());
         $response = app()->handle($req);
         $responseBody = $response->getContent();
-
+        
         return response()->json(['code'=>200, 'message'=>'Post Created successfully','data' => $responseBody], 200);
     }
 

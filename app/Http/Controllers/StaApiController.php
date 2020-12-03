@@ -138,6 +138,51 @@ class StaApiController extends Controller
         return response($transactions, 200);
     }
 
+    public function getTransactionsToday()/////////////
+    {
+        $transactions = Transactionheaders::get()
+        ->where('transferDate', '>=', date('Y-m-d').' 00:00:00')
+        ->toJson(JSON_PRETTY_PRINT);
+        if($transactions){
+            return response($transactions, 200);
+        }
+        else{
+            return response()->json([
+                "message" => "No Transaction records found!"
+            ], 404);
+        }
+    }
+
+    public function getTransactionsByStatus($status)
+    {
+        $transactions = Transactionheaders::where('status', $status)
+        ->get()->toJson(JSON_PRETTY_PRINT);
+
+        $checkVal = json_decode($transactions, true);
+        if(!empty($checkVal)){
+            return response($transactions, 200);
+        }
+        else{
+            return "No Transaction records found!";
+        }
+    }
+
+    public function getTransactionsByStatus2($status1, $status2)
+    {
+        $transactions = Transactionheaders::where(
+            'status', '=', $status1)
+            ->orWhere('status', '=', $status2)
+        ->get()->toJson(JSON_PRETTY_PRINT);
+        
+        $checkVal = json_decode($transactions, true);
+        if(!empty($checkVal)){
+            return response($transactions, 200);
+        }
+        else{
+            return "No Transaction records found!";
+        }
+    }
+
     public function storeTransaction(Request $request)
     {
         if(!$request->warehouseFrom || !$request->warehouseTo || !$request->transferDate || !$request->reference){
@@ -237,6 +282,25 @@ class StaApiController extends Controller
             }
 
             return response()->json(['code'=>200, 'success'=>'Transaction Created successfully','data' => $transHeader], 200);
+        }
+    }
+
+    public function updateIsViewed($id,$isOpened)
+    {
+        if($isOpened == 0 || $isOpened == 1){
+            // $transactions = Transactionheaders::where('id', $id)
+            $transactions = Transactionheaders::updateOrCreate(['id' => $id], [
+                'isOpened'=> $isOpened
+            ]);
+            
+            $checkVal = json_decode($transactions, true);
+            return response()->json(['code'=>200, 'success'=>'Transaction isOpened was updated!'], 200);
+        }
+        else{
+            // $transHeader = Transactionheaders::updateOrCreate(['id' => $id], [
+            //     'isOpened' => $isOpened
+            // ]);
+            return 'Invalid Value!';
         }
     }
 }

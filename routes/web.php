@@ -41,7 +41,7 @@ Route::get('/logout', function () {
 
 Route::get('/', function () {
     if(session()->has('code')){
-        return redirect('transactions');
+        return redirect('home');
     }
     return view('login');
 });

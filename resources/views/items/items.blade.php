@@ -156,7 +156,7 @@
           _token: _token
         },
         success: function(response) {
-
+            console.log(response);
             if(response.code == 200) {
 
               let res = JSON.parse(response.data);

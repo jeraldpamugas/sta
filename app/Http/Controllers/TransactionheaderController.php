@@ -115,6 +115,9 @@ class TransactionheaderController extends Controller
         ->where('transNo', $transaction->transNo)
         ->get();
 
+        $updateIsOpend = Request::create('api/transactionsIsOpened/'.$transaction->id.'/1', 'PUT');
+        $updateIsOpend2 = app()->handle($updateIsOpend);
+
         return view('transactions.edit',compact('transaction','translinesList','usertype', 'warehouseList', 'itemList'));
     }
 
@@ -130,6 +133,9 @@ class TransactionheaderController extends Controller
             return 'Invalid Status';
         }
         else{
+            $updateIsOpend = Request::create('api/transactionsIsOpened/'.$request->id.'/0', 'PUT');
+            $updateIsOpend2 = app()->handle($updateIsOpend);
+
             return response()->json([$responseBody], 200);
         }
     }

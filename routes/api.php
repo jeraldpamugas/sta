@@ -35,5 +35,9 @@ Route::get('transactions', [StaApiController::class, 'getTransactions']);
 Route::get('transactions/{id}', [StaApiController::class, 'showTransaction']);
 Route::post('transactions', [StaApiController::class, 'storeTransaction']);
 Route::put('transactions', [StaApiController::class, 'updateTransaction']);
+Route::get('transactionsToday', [StaApiController::class, 'getTransactionsToday']);
+Route::get('transactionsByStatus/{status}', [StaApiController::class, 'getTransactionsByStatus']);
+Route::get('transactionsByStatus/{status1}/{status2}', [StaApiController::class, 'getTransactionsByStatus2']);
+Route::put('transactionsIsOpened/{id}/{isOpened}', [StaApiController::class, 'updateIsViewed']);
 //TransactionLines
 Route::get('transactionlines/{id}', [StaApiController::class, 'getTransactionLines']);

@@ -27,13 +27,47 @@
       }
       
       .card {
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
         width: 100%;
+        border-radius: 10px;
       }
 
-      .card:hover {
-        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+      .pendingCard {
+        box-shadow: 0 4px 8px 0 rgba(255, 0, 0, 0.2);
+      }
+
+      .upcomingCard {
+        box-shadow: 0 4px 8px 0 rgba(0, 158, 71, 0.2);
+      }
+      .pendingTransA:hover div{
+        background-color: rgba(255, 0, 0, 0.2);
+        color: black;
+      }
+      .confirmedTrans:hover div{
+        background-color: rgba(0, 158, 71, 0.2);
+        color: black;
+      }
+      
+      .pendingTransA:link{
+        text-decoration: none;
+      }
+      .confirmedTrans:link{
+        text-decoration: none;
+      }
+      .pendingTransA{
+        color: black;
+      }
+      .confirmedTrans{
+        color: black;
+      }
+      .pendingTransA h5{
+        margin: 0;
+      }
+      .confirmedTrans h5{
+        margin: 0;
+      }
+      #transactionTable thead{
+        position: sticky; top: 0;
       }
     </style>
     
@@ -52,9 +86,10 @@
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 @if($usertype != 'staff')
-                <li role="presentation"><a id="navItem" class="navi" style="color: white" href="{{ url('/transactions') }}">Transactions</a></li>
                 <li role="presentation"><a id="navItem" class="navi" style="color: white" href="{{ url('/items') }}">Item</a></li>
                 <li role="presentation"><a id="navWH" class="navi" style="color: white" href="{{ url('/warehouses') }}">Warehouse</a></li>
+                @else
+                <li role="presentation"><a id="navItem" class="navi" style="color: white" href="{{ url('/transactions') }}">Transactions</a></li>
                 @endif
             </ul>
             <ul class="nav navbar-nav navbar-right">

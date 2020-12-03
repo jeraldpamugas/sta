@@ -6,7 +6,7 @@
                 <h4 style="margin: 0px;">Transaction No: <b>{{ $transaction[0]['transNo'] }}</b></h4>
             </div>
             <div class="pull-right">
-                <a id="btnBack" class="btn" href="{{ route('transactions.index') }}"> Back</a>
+                <a id="btnBackFromEditTrans" class="btn" href="#"> Back</a>
             </div>
         </div>
         <div id="report" class="col-sm-12" style='margin: auto;'>
@@ -111,6 +111,11 @@
             $("#btnBack").show();
             
         }
+
+        $('#btnBackFromEditTrans').click( function(e) {
+            e.preventDefault(); 
+            window.history.back(); return false; 
+        });
     
     </script>
 @endsection

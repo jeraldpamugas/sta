@@ -6,7 +6,7 @@
                 <h4>Transaction No: <b>{{ $transaction->transNo }}</b></h4>
             </div>
             <div class="pull-right">
-                <a class="btn" href="{{ route('transactions.index') }}">Back</a>
+                <a id="btnBackFromEditTrans" class="btn" href="#">Back</a>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
     <form id="transForm">
         @csrf
         @method('PUT')
-    
+
         <div class="row">
             <input type="hidden" name="wrId" id="wrId" value="{{ $transaction->id }}">
             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -101,15 +101,15 @@
         </div>
     </form>
     <script>
-        
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    
+
     $('#transForm').on('submit', function(event) {
-        
+
         event.preventDefault();
 
         var status = $('#status').val();
@@ -130,7 +130,9 @@
                     alert("Please enter a valid status!");
                 }
                 else{
-                window.location.href = "/transactions";
+                // window.history.back();
+                // location.reload();
+                window.location = document.referrer;
                 }
             },
             error: function(response) {
@@ -138,6 +140,12 @@
                 location.reload();
             }
         });
+    });
+
+    $('#btnBackFromEditTrans').click( function(e) {
+        e.preventDefault();
+        window.location = document.referrer;
+        // window.history.back(); return false;
     });
 
     </script>
