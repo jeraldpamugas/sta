@@ -156,10 +156,11 @@
           _token: _token
         },
         success: function(response) {
-            console.log(response);
+            // console.log(response);
             if(response.code == 200) {
-
               let res = JSON.parse(response.data);
+              // console.log(res);
+              // console.log(id);
               if(id != ""){
                 
                 $("#row_"+id+" td:nth-child(2)").html(res.data.itemCode);

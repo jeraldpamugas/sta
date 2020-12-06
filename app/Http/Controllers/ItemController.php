@@ -22,12 +22,13 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
+        // return $request;
         $request->validate([
             'itemCode' => 'required',
             'Description' => 'required',
             'unit' => 'required'
         ]);
-        return $request->all();
+        // return $request->all();
         $req = Request::create('api/items', 'POST', $request->all());
         $response = app()->handle($req);
         $responseBody = $response->getContent();

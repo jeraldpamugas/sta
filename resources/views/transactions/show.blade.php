@@ -105,10 +105,10 @@
         function showReport(){
 
             $("#btnReport").hide();
-            $("#btnBack").hide();
+            $("#btnBackFromEditTrans").hide();
             window.print();
             $("#btnReport").show();
-            $("#btnBack").show();
+            $("#btnBackFromEditTrans").show();
             
         }
 

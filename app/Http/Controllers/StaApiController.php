@@ -29,7 +29,7 @@ class StaApiController extends Controller
 
     public function storeItem(Request $request)
     {
-        if(!$request->id || !$request->itemCode || !$request->Description || !$request->unit){
+        if(!$request->itemCode || !$request->Description || !$request->unit){
             return response()->json(['message'=>'Fillout all required fields.'], 202);
         }
         else{
@@ -87,7 +87,7 @@ class StaApiController extends Controller
 
     public function storeWarehouse(Request $request)
     {
-        if(!$request->id || !$request->warehouseCode || !$request->description){
+        if(!$request->warehouseCode || !$request->description){
             return response()->json(['message'=>'Fillout all required fields.'], 202);
         }
         else{
