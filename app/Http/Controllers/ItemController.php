@@ -22,13 +22,12 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        // return $request;
         $request->validate([
             'itemCode' => 'required',
             'Description' => 'required',
             'unit' => 'required'
         ]);
-        // return $request->all();
+        
         $req = Request::create('api/items', 'POST', $request->all());
         $response = app()->handle($req);
         $responseBody = $response->getContent();
@@ -38,7 +37,6 @@ class ItemController extends Controller
 
     public function show(Items $item)
     {
-        // $request = Request::create('api/items/' . $item->id, 'GET');
         $request = Request::create('api/items/' . $item->id, 'GET');
         $response = app()->handle($request);
         $responseBody = $response->getContent();

@@ -26,6 +26,7 @@ class WarehouseController extends Controller
             'warehouseCode' => 'required',
             'description' => 'required'
         ]);
+        
         $req = Request::create('api/warehouses', 'POST', $request->all());
         $response = app()->handle($req);
         $responseBody = $response->getContent();

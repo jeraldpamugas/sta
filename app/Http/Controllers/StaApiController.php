@@ -20,7 +20,7 @@ class StaApiController extends Controller
     {
         if (Items::all()) {
             $items = Items::get()->toJson(JSON_PRETTY_PRINT);
-            return response($items, 200);
+            return response(json_decode($items), 200);
         } else {
             return response()->json([
                 "message" => "No Item record found!"
@@ -78,7 +78,7 @@ class StaApiController extends Controller
     {
         if (Warehouses::all()) {
             $warehouses = Warehouses::get()->toJson(JSON_PRETTY_PRINT);
-            return response($warehouses, 200);
+            return response(json_decode($warehouses), 200);
         } else {
             return response()->json([
                 "message" => "No Warehouse record found!"
@@ -136,7 +136,7 @@ class StaApiController extends Controller
     public function getTransactions()
     {
         $transactions = Transactionheaders::get()->toJson(JSON_PRETTY_PRINT);
-        return response($transactions, 200);
+        return response(json_decode($transactions), 200);
     }
 
     public function getTransactionsToday()
@@ -145,7 +145,7 @@ class StaApiController extends Controller
         ->where('transferDate', '>=', date('Y-m-d').' 00:00:00')
         ->toJson(JSON_PRETTY_PRINT);
         if($transactions){
-            return response($transactions, 200);
+            return response(json_decode($transactions), 200);
         }
         else{
             return response()->json([
@@ -161,7 +161,7 @@ class StaApiController extends Controller
 
         $checkVal = json_decode($transactions, true);
         if(!empty($checkVal)){
-            return response($transactions, 200);
+            return response(json_decode($transactions), 200);
         }
         else{
             return "No Transaction records found!";
@@ -177,7 +177,7 @@ class StaApiController extends Controller
         
         $checkVal = json_decode($transactions, true);
         if(!empty($checkVal)){
-            return response($transactions, 200);
+            return response(json_decode($transactions), 200);
         }
         else{
             return "No Transaction records found!";
@@ -292,8 +292,6 @@ class StaApiController extends Controller
             $transactions = DB::table('transactionheaders')
             ->where('id', $id)
             ->update(['isOpened' => $isOpened]);
-            return $transactions;
-            $checkVal = json_decode($transactions, true);
             return response()->json(['code'=>200, 'success'=>'Transaction isOpened was updated!'], 200);
         }
         else{
