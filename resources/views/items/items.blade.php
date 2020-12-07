@@ -5,11 +5,9 @@
 <div class="row">
   <div class="col-12 text-right">
       <div class="col-sm-6" style="float: left;">
-           <h3 class="pull-left" style="margin: 0;">Items</h3>
+           {{-- <h3 class="pull-left" style="margin: 0;">Items</h3> --}}
+           <a href="javascript:void(0)" class="btn btn-success mb-3 pull-left" id="create-new-post" onclick="addPost()">Add Item</a>
        </div>
-      <div class="col-sm-6">
-           <a href="javascript:void(0)" class="btn btn-success mb-3" id="create-new-post" onclick="addPost()">Add Item</a>
-      </div>
   </div>
 </div>
 <div class="row" style="clear: both;margin-top: 18px;">

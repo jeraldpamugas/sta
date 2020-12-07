@@ -20,13 +20,6 @@ class TransactionheaderController extends Controller
     {
         $usertype = session::get('usertype');
 
-        // $transactions = Transactionheaders::latest()->paginate(5);
-        // return $transactions;
-
-        // return view('transactions.index',compact('transactions', 'usertype'))
-        //     ->with('i', (request()->input('page', 1) - 1) * 5);
-
-        
         $request = Request::create('api/transactions', 'GET');
         $response = app()->handle($request);
         $responseBody = $response->getContent();
@@ -117,6 +110,7 @@ class TransactionheaderController extends Controller
 
         $updateIsOpend = Request::create('api/transactionsIsOpened/'.$transaction->id.'/1', 'PUT');
         $updateIsOpend2 = app()->handle($updateIsOpend);
+        $responseBody2 = $updateIsOpend2->getContent();
 
         return view('transactions.edit',compact('transaction','translinesList','usertype', 'warehouseList', 'itemList'));
     }

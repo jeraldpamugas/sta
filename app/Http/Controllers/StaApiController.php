@@ -10,6 +10,7 @@ use App\Models\Useraccounts;
 use Illuminate\Http\Request;
 use Session;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class StaApiController extends Controller
 {
@@ -138,7 +139,7 @@ class StaApiController extends Controller
         return response($transactions, 200);
     }
 
-    public function getTransactionsToday()/////////////
+    public function getTransactionsToday()
     {
         $transactions = Transactionheaders::get()
         ->where('transferDate', '>=', date('Y-m-d').' 00:00:00')
@@ -288,18 +289,14 @@ class StaApiController extends Controller
     public function updateIsViewed($id,$isOpened)
     {
         if($isOpened == 0 || $isOpened == 1){
-            // $transactions = Transactionheaders::where('id', $id)
-            $transactions = Transactionheaders::updateOrCreate(['id' => $id], [
-                'isOpened'=> $isOpened
-            ]);
-            
+            $transactions = DB::table('transactionheaders')
+            ->where('id', $id)
+            ->update(['isOpened' => $isOpened]);
+            return $transactions;
             $checkVal = json_decode($transactions, true);
             return response()->json(['code'=>200, 'success'=>'Transaction isOpened was updated!'], 200);
         }
         else{
-            // $transHeader = Transactionheaders::updateOrCreate(['id' => $id], [
-            //     'isOpened' => $isOpened
-            // ]);
             return 'Invalid Value!';
         }
     }

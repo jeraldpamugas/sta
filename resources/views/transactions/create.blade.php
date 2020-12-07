@@ -229,7 +229,7 @@
                     },
                     success: function(response) {
                         // console.log(response);
-                        window.location.href = "/transactions";
+                        window.location.href = "/";
                     },
                     error: function(response) {
                         console.log(response);
