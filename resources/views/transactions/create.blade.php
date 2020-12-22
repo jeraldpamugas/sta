@@ -7,7 +7,7 @@
             <h4>New Transaction</h4>
         </div>
         <div class="pull-right">
-            <a class="btn" href="{{ route('transactions.index') }}">Back</a>
+            <a class="btn" href="#" onclick="backTrans()">Back</a>
         </div>
     </div>
 </div>
@@ -246,6 +246,10 @@
 
         }
     });
+
+    function backTrans(){
+        window.location = document.referrer;
+    }
     
     
     // function createPost() {

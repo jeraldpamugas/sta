@@ -53,3 +53,12 @@ Route::post('/updatetrans', [TransactionheaderController::class, 'update']);
 Route::fallback(function() {
     return redirect('/');
 });
+
+Route::get('test', function () {
+    event(new App\Events\StatusLiked('Someone'));
+    return "Event has been sent!";
+});
+
+Route::get('/welcome', function () {
+    return view('testpusher');
+});
