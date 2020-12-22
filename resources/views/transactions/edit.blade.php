@@ -77,76 +77,100 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                    @if($usertype == 'supervisor' && $transaction->status == 'O')
-                        <input id="status" name="status" type="hidden" value="A">
-                        <div class="col-sm-12">
-                            <button type="submit" class="btn btn-primary" style="display: block; width: 100%; margin-top: 18px;">Authorize</button>
-                        </div>
-                    @elseif($usertype == 'manager' && $transaction->status == 'A' || $usertype == 'manager' && $transaction->status == 'C')
-                        @if ($transaction->status == 'A')
+                @if ($usertype == 'supervisor' && $transaction->status == 'O')
+                    <input id="status" name="status" type="hidden" value="A">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-primary"
+                            style="display: block; width: 100%; margin-top: 18px;">Authorize</button>
+                    </div>
+                @elseif($usertype == 'manager' && $transaction->status == 'A' || $usertype == 'manager' &&
+                    $transaction->status == 'C')
+                    @if ($transaction->status == 'A')
                         <input id="status" name="status" type="hidden" value="C">
-                        @elseif ($transaction->status == 'C')
+                    @elseif ($transaction->status == 'C')
                         <input id="status" name="status" type="hidden" value="P">
-                        @endif
-                        <div class="col-sm-12">
-                            @if ($transaction->status == 'A')
-                                <button type="submit" class="btn btn-primary" style="display: block; width: 100%; margin-top: 18px;">Confirm</button>
-                            @elseif ($transaction->status == 'C')
-                                <button type="submit" class="btn btn-primary" style="display: block; width: 100%; margin-top: 18px;">Process</button>
-                            @endif
-                        </div>
                     @endif
-                </div>
+                    <div class="col-sm-12">
+                        @if ($transaction->status == 'A')
+                            <button type="submit" class="btn btn-primary"
+                                style="display: block; width: 100%; margin-top: 18px;">Confirm</button>
+                        @elseif ($transaction->status == 'C')
+                            <button type="submit" class="btn btn-primary"
+                                style="display: block; width: 100%; margin-top: 18px;">Process</button>
+                        @endif
+                    </div>
+                @endif
             </div>
+        </div>
         </div>
     </form>
     <script>
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $('#transForm').on('submit', function(event) {
-
-        event.preventDefault();
-
-        var status = $('#status').val();
-        var id = $("#wrId").val();
-        let _url     = '/updatetrans';
-        let _token   = $('meta[name="csrf-token"]').attr('content');
-
-        $.ajax({
-            url: _url,
-            type: "POST",
-            data: {
-                id: id,
-                status: status,
-                _token: _token,
-            },
-            success: function(response) {
-                if(response == 'Invalid Status'){
-                    alert("Please enter a valid status!");
-                }
-                else{
-                // window.history.back();
-                // location.reload();
-                window.location = document.referrer;
-                }
-            },
-            error: function(response) {
-                alert('Press ok to refresh the page!');
-                location.reload();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-    });
 
-    $('#btnBackFromEditTrans').click( function(e) {
-        e.preventDefault();
-        window.location = document.referrer;
-        // window.history.back(); return false;
-    });
+        $('#transForm').on('submit', function(event) {
+
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'Save new Status?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: `Save`,
+                denyButtonText: `Don't save`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+
+                    var status = $('#status').val();
+                    var id = $("#wrId").val();
+                    let _url = '/updatetrans';
+                    let _token = $('meta[name="csrf-token"]').attr('content');
+
+                    $.ajax({
+                        url: _url,
+                        type: "POST",
+                        data: {
+                            id: id,
+                            status: status,
+                            _token: _token,
+                        },
+                        success: function(response) {
+                            if (response == 'Invalid Status') {
+                                Swal.fire('Enter a valid status!', '', 'warning')
+                            } else {
+                                // window.history.back();
+                                // location.reload();
+                                Swal.fire('Saved!', '', 'success')
+                                setTimeout(() => {
+                                    window.location = document.referrer;
+                                }, 800);
+                            }
+                        },
+                        error: function(response) {
+                            Swal.fire('Press ok to refresh the page!', '', 'error')
+                            location.reload();
+                        }
+                    });
+
+                } else if (result.isDenied) {
+
+                    Swal.fire('Changes are not saved', '', 'info')
+                    setTimeout(() => {
+                        window.location = document.referrer;
+                    }, 800);
+                }
+            })
+        });
+
+        $('#btnBackFromEditTrans').click(function(e) {
+            e.preventDefault();
+            window.location = document.referrer;
+            // window.history.back(); return false;
+        });
 
     </script>
 @endsection
