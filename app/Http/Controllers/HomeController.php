@@ -16,7 +16,7 @@ class HomeController extends Controller
     {
         $usertype = session::get('usertype');
 
-        //get today and upcoming
+        //get today and upcoming https://jsonplaceholder.typicode.com/todos/1
         $requestToday = Request::create('api/transactionsToday', 'GET');
         $responseToday = app()->handle($requestToday);
         $transactionListToday = $responseToday->getContent();
