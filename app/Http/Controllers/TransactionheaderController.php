@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Session;
 use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Events\transactionUpdated;
 
 
 
@@ -39,6 +40,7 @@ class TransactionheaderController extends Controller
 
     public function store(Request $request)
     {
+        
         $transNewId = Transactionheaders::max('transNo') + 1;
 
         $request->validate([
@@ -60,7 +62,9 @@ class TransactionheaderController extends Controller
         $response = app()->handle($req);
         $responseBody = $response->getContent();
 
-        return response()->json(['message'=>'Post Created successfully', $responseBody], 200);
+        event(new transactionUpdated('New transction added!'));
+        return $responseBody;
+        // return response()->json(['message'=>'Post Created successfully', $responseBody], 200);
     }
 
     public function show(Transactionheaders $transaction)
@@ -129,6 +133,8 @@ class TransactionheaderController extends Controller
         else{
             $updateIsOpend = Request::create('api/transactionsIsOpened/'.$request->id.'/0', 'PUT');
             $updateIsOpend2 = app()->handle($updateIsOpend);
+
+            event(new transactionUpdated(''));
 
             return response()->json([$responseBody], 200);
         }

@@ -34,11 +34,14 @@ class StaApiController extends Controller
             return response()->json(['message'=>'Fillout all required fields.'], 202);
         }
         else{
+
             $item = Items::updateOrCreate(['id' => $request->id], [
                         'itemCode' => $request->itemCode,
                         'Description' => $request->Description,
                         'unit' => $request->unit
                     ]);
+                    
+
             return response()->json(['code'=>200, 'message'=>'Item Created successfully','data' => $item], 200);
         }
     }
@@ -142,7 +145,7 @@ class StaApiController extends Controller
     public function getTransactionsToday()
     {
         $transactions = Transactionheaders::get()
-        ->where('transferDate', '>=', date('Y-m-d').' 00:00:00')
+        // ->where('transferDate', '>=', date('Y-m-d').' 00:00:00')
         ->toJson(JSON_PRETTY_PRINT);
         if($transactions){
             return response(json_decode($transactions), 200);

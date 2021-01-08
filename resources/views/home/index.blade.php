@@ -168,18 +168,59 @@
         //     }, 3000);
         // });
 
-        setInterval(function() {
-            console.log('something');
-            if ($('#transactionTable').length) {
-                $("#transactionTable").load("/home #transactionTable");
+        // setInterval(function() {
+        //     console.log('something');
+        //     if ($('#transactionTable').length) {
+        //         $("#transactionTable").load("/home #transactionTable");
+        //     }
+        //     if ($('.pendingCard').length) {
+        //         $(".pendingCard").load(location.href + " .pendingCard");
+        //     }
+        //     if ($('.upcomingCard').length) {
+        //         $(".upcomingCard").load(location.href + " .upcomingCard")
+        //     };
+        // }, 10000);
+
+    </script>
+
+
+    <script src="//js.pusher.com/3.1/pusher.min.js"></script>
+
+    <script type="text/javascript">
+        var notificationsWrapper = $('.dropdown-notifications');
+        var notificationsToggle = notificationsWrapper.find('a[data-toggle]');
+        var notificationsCountElem = notificationsToggle.find('i[data-count]');
+        var notificationsCount = parseInt(notificationsCountElem.data('count'));
+        var notifications = notificationsWrapper.find('ul.dropdown-menu');
+
+        if (notificationsCount <= 0) {
+            notificationsWrapper.hide();
+        }
+
+        // Enable pusher logging - don't include this in production
+        // Pusher.logToConsole = true;
+
+        var pusher = new Pusher('ad7d614f8f158a381f64', {
+            cluster: 'ap1',
+            encrypted: true
+        });
+
+        // Subscribe to the channel we specified in our Laravel Event
+        var channel = pusher.subscribe('trans-updated');
+
+        // Bind a function to a Event (the full Laravel class)
+        channel.bind('App\\Events\\transactionUpdated', function(data) {
+            console.log(data.message);
+            $("#transactionTable").load("/home #transactionTable");
+            $(".pendingCard").load(location.href + " .pendingCard");
+            $(".upcomingCard").load(location.href + " .upcomingCard");
+            if (data.message != '') {
+                Swal.fire({
+                    icon: 'info',
+                    title: data.message
+                })
             }
-            if ($('.pendingCard').length) {
-                $(".pendingCard").load(location.href + " .pendingCard");
-            }
-            if ($('.upcomingCard').length) {
-                $(".upcomingCard").load(location.href + " .upcomingCard")
-            };
-        }, 10000);
+        });
 
     </script>
 @endsection

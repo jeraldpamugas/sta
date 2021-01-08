@@ -62,3 +62,10 @@ Route::get('test', function () {
 Route::get('/welcome', function () {
     return view('testpusher');
 });
+
+
+Route::get('test', function () {
+    // event(new App\Events\ItemsUpdated('jejeje'));
+    Event::dispatch(new App\Events\transactionUpdated('jerald'));
+    return "Event has been sent!";
+});

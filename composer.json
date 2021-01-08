@@ -12,9 +12,10 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
+        "ixudra/curl": "^6.21",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
-        "pusher/pusher-php-server": "^4.1",
+        "pusher/pusher-php-server": "~4.0",
         "yajra/laravel-datatables-oracle": "^9.14"
     },
     "require-dev": {

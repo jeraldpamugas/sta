@@ -18,6 +18,15 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        'App\Events\ItemsUpdated' => [
+            'App\Listeners\ItemsUpdatedListener',
+        ],
+        'App\Events\WarehousesUpdated' => [
+            'App\Listeners\WarehousesUpdatedListener',
+        ],
+        'App\Events\transactionUpdated' => [
+            'App\Listeners\transactionUpdatedListener',
+        ],
     ];
 
     /**
@@ -27,6 +36,13 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Event::listen(
+            ItemsUpdated::class,
+            [ItemsUpdatedListener::class, 'handle']
+        );
+
+        Event::listen(function (ItemsUpdated $event) {
+            //
+        });
     }
 }
